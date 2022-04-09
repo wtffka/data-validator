@@ -1,71 +1,113 @@
 package app;
 
 import hexlet.code.Validator;
+import hexlet.code.schemas.NumberSchema;
 import hexlet.code.schemas.StringSchema;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.Test;
 
 public class AppTest {
 
-    @Test
-    void testIsValidBeforeSchemaRequired() {
-        Validator validator = new Validator();
-        StringSchema schema = validator.string();
+    private final Validator validator = new Validator();
+    private final StringSchema stringSchema = validator.string();
+    private final NumberSchema numberSchema = validator.number();
+    private final int endOfRange = 4;
 
-        boolean result = schema.isValid("");
+    @Test
+    void testIsValidBeforeStringSchemaRequired() {
+        boolean result = stringSchema.isValid("");
         assertThat(result).isEqualTo(true);
 
-        result = schema.isValid("rock");
+        result = stringSchema.isValid("rock");
         assertThat(result).isEqualTo(true);
     }
 
     @Test
-    void testIsValidAfterSchemaRequired() {
-        Validator validator1 = new Validator();
-        StringSchema schema = validator1.string();
+    void testIsValidAfterStringSchemaRequired() {
+        stringSchema.required();
 
-        schema.required();
-
-        boolean result = schema.isValid("rock");
+        boolean result = stringSchema.isValid("rock");
         assertThat(result).isEqualTo(true);
 
-        boolean result1 = schema.isValid("");
-        assertThat(result1).isEqualTo(false);
+        result = stringSchema.isValid("");
+        assertThat(result).isEqualTo(false);
     }
 
     @Test
-    void testContainsMethod() {
-        Validator validator2 = new Validator();
-        StringSchema schema = validator2.string();
+    void testIsContainsMethod() {
+        stringSchema.required();
 
-        schema.required();
+        stringSchema.contains("ro");
 
-        schema.contains("ro");
-
-        boolean result = schema.isValid("rock");
+        boolean result = stringSchema.isValid("rock");
         assertThat(result).isEqualTo(true);
 
-        schema.contains("cro");
+        stringSchema.contains("cro");
 
-        result = schema.isValid("rock");
+        result = stringSchema.isValid("rock");
         assertThat(result).isEqualTo(false);
     }
 
     @Test
     void testMinLength() {
-        Validator validator2 = new Validator();
-        StringSchema schema = validator2.string();
+        stringSchema.required();
 
-        schema.required();
+        stringSchema.minLength(2);
 
-        schema.minLength(2);
-
-        boolean result = schema.isValid("u");
+        boolean result = stringSchema.isValid("u");
         assertThat(result).isEqualTo(false);
 
-        result = schema.isValid("me");
+        result = stringSchema.isValid("me");
         assertThat(result).isEqualTo(true);
     }
 
+    @Test
+    void testIsValidBeforeNumberSchemaRequired() {
+        boolean result = numberSchema.isValid(0);
+        assertThat(result).isEqualTo(true);
+
+        result = numberSchema.isValid(null);
+        assertThat(result).isEqualTo(true);
+    }
+
+    @Test
+    void testIsValidAfterNumberSchemaRequired() {
+        numberSchema.required();
+
+        numberSchema.positive();
+
+        boolean result = numberSchema.isValid(0);
+        assertThat(result).isEqualTo(true);
+
+        result = numberSchema.isValid(null);
+        assertThat(result).isEqualTo(false);
+    }
+
+    @Test
+    void testIsPositiveMethod() {
+        numberSchema.required();
+
+        numberSchema.positive();
+
+        boolean result = numberSchema.isValid(1);
+        assertThat(result).isEqualTo(true);
+
+        result = numberSchema.isValid(-1);
+        assertThat(result).isEqualTo(false);
+    }
+
+    @Test
+    void isNumberInRangeMethod() {
+        numberSchema.required();
+
+        numberSchema.range(1, endOfRange);
+
+        boolean result = numberSchema.isValid(0);
+        assertThat(result).isEqualTo(false);
+
+        result = numberSchema.isValid(1);
+        assertThat(result).isEqualTo(true);
+    }
 }
