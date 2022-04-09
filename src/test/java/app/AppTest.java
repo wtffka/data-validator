@@ -1,6 +1,7 @@
 package app;
 
 import hexlet.code.Validator;
+import hexlet.code.schemas.MapSchema;
 import hexlet.code.schemas.NumberSchema;
 import hexlet.code.schemas.StringSchema;
 
@@ -8,12 +9,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class AppTest {
 
     private final Validator validator = new Validator();
     private final StringSchema stringSchema = validator.string();
     private final NumberSchema numberSchema = validator.number();
-    private final int endOfRange = 4;
+    private final MapSchema mapSchema = validator.map();
 
     @Test
     void testIsValidBeforeStringSchemaRequired() {
@@ -102,12 +106,59 @@ public class AppTest {
     void isNumberInRangeMethod() {
         numberSchema.required();
 
-        numberSchema.range(1, endOfRange);
+        numberSchema.range(1, 2);
 
         boolean result = numberSchema.isValid(0);
         assertThat(result).isEqualTo(false);
 
         result = numberSchema.isValid(1);
+        assertThat(result).isEqualTo(true);
+    }
+
+    @Test
+    void testIsValidBeforeMapSchemaRequired() {
+        boolean result = mapSchema.isValid(0);
+        assertThat(result).isEqualTo(true);
+
+        Map<String, String> map = new HashMap<>();
+
+        map.put("1", "Slava");
+
+        result = mapSchema.isValid(map);
+        assertThat(result).isEqualTo(true);
+    }
+
+    @Test
+    void testIsValidAfterMapSchemaRequired() {
+        mapSchema.required();
+
+        Map<String, String> map = new HashMap<>();
+
+        map.put("1", "Slava");
+
+        boolean result = mapSchema.isValid(map);
+        assertThat(result).isEqualTo(true);
+
+        result = mapSchema.isValid("");
+        assertThat(result).isEqualTo(false);
+    }
+
+    @Test
+    void testSizeOfMethod() {
+        mapSchema.required();
+
+        mapSchema.sizeOf(2);
+
+        Map<String, String> map = new HashMap<>();
+
+        map.put("1", "Slava");
+
+        boolean result = mapSchema.isValid(map);
+        assertThat(result).isEqualTo(false);
+
+        map.put("2", "Balakhonov");
+
+        result = mapSchema.isValid(map);
         assertThat(result).isEqualTo(true);
     }
 }
