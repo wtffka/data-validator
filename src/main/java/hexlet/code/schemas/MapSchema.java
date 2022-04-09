@@ -12,7 +12,7 @@ public class MapSchema extends BaseSchema {
         return this;
     }
 
-    public final MapSchema sizeOf(int amount) {
+    public final MapSchema sizeof(int amount) {
         addCheck(map -> ((Map<?, ?>) map).size() == amount);
         return this;
     }

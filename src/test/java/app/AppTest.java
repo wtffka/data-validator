@@ -148,7 +148,7 @@ public class AppTest {
     void testSizeOfMethod() {
         mapSchema.required();
 
-        mapSchema.sizeOf(2);
+        mapSchema.sizeof(2);
 
         Map<String, String> map = new HashMap<>();
 
