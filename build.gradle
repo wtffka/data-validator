@@ -9,9 +9,6 @@ plugins {
     id 'net.ltgt.errorprone' version '2.0.2'
 }
 
-group = 'io.hexlet'
-version = '1.0.3-SNAPSHOT'
-
 repositories {
     mavenCentral()
 }
@@ -51,3 +48,6 @@ jacocoTestReport {
 checkstyle {
     toolVersion '9.2.1'
 }
+
+group = 'hexlet.code'
+version = '1.0-SNAPSHOT'
