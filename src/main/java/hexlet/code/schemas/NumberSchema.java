@@ -3,7 +3,7 @@ package hexlet.code.schemas;
 public class NumberSchema extends BaseSchema {
 
     @Override
-    public final BaseSchema required() {
+    public final NumberSchema required() {
         addCheck(x -> x != null);
         return this;
     }

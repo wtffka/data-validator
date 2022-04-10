@@ -168,7 +168,7 @@ public class AppTest {
         mapSchema.required();
 
         Map<String, BaseSchema> schemas = new HashMap<>();
-        schemas.put("name", validator.string().required());
+        schemas.put("name", validator.string().required().contains("ya"));
         schemas.put("age", validator.number().positive());
         mapSchema.shape(schemas);
 
