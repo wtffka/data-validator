@@ -4,7 +4,12 @@ public class NumberSchema extends BaseSchema {
 
     @Override
     public final NumberSchema required() {
-        addCheck(x -> x != null);
+        addCheck(x -> {
+            if (x instanceof Integer || x instanceof Double) {
+                return x != null;
+            }
+            return false;
+        });
         return this;
     }
 

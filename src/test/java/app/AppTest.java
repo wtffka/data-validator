@@ -81,12 +81,13 @@ public class AppTest {
     void testIsValidAfterNumberSchemaRequired() {
         numberSchema.required();
 
-        numberSchema.positive();
-
         boolean result = numberSchema.isValid(0);
         assertThat(result).isEqualTo(true);
 
         result = numberSchema.isValid(null);
+        assertThat(result).isEqualTo(false);
+
+        result = numberSchema.isValid("5");
         assertThat(result).isEqualTo(false);
     }
 
