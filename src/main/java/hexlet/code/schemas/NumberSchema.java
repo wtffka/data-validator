@@ -16,7 +16,7 @@ public class NumberSchema extends BaseSchema {
             if (x instanceof Double) {
                 return (Double) x >= 0;
             }
-            return false;
+            return x == null;
         });
         return this;
     }

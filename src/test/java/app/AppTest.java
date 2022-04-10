@@ -179,6 +179,14 @@ public class AppTest {
         boolean result = mapSchema.isValid(human1);
         assertThat(result).isEqualTo(true);
 
+        Map<String, Object> human2 = new HashMap<>();
+        human2.put("name", "Maya");
+        human2.put("age", null);
+        mapSchema.isValid(human2);
+
+        result = mapSchema.isValid(human2);
+        assertThat(result).isEqualTo(true);
+
         Map<String, Object> human4 = new HashMap<>();
         human4.put("name", "Valya");
         human4.put("age", -1);
