@@ -9,12 +9,12 @@ public class StringSchema extends BaseSchema {
     }
 
     public final StringSchema contains(String subString) {
-        addCheck(x -> x.toString().contains(subString));
+        addCheck(x -> null != x.toString() && x.toString().contains(subString));
         return this;
     }
 
     public final StringSchema minLength(int length) {
-        addCheck(x -> x.toString().length() >= length);
+        addCheck(x -> null != x.toString() && x.toString().length() >= length);
         return this;
     }
 }
