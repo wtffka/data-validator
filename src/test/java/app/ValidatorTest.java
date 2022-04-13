@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AppTest {
+public class ValidatorTest {
 
     private final Validator validator = new Validator();
     private final StringSchema stringSchema = validator.string();

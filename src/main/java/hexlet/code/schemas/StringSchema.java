@@ -4,8 +4,9 @@ public class StringSchema extends BaseSchema {
 
     @Override
     public final StringSchema required() {
+        isRequiredOn();
         addCheck(x -> {
-            if (x != null) {
+            if (x instanceof String) {
                 return !x.toString().isEmpty();
             }
             return false;
@@ -14,22 +15,12 @@ public class StringSchema extends BaseSchema {
     }
 
     public final StringSchema contains(String subString) {
-        addCheck(x -> {
-            if (x != null) {
-                return x.toString().contains(subString);
-            }
-            return false;
-        });
+        addCheck(x -> x.toString().contains(subString));
         return this;
     }
 
     public final StringSchema minLength(int length) {
-        addCheck(x -> {
-            if (x != null) {
-                return x.toString().length() >= length;
-            }
-            return false;
-        });
+        addCheck(x -> x.toString().length() >= length);
         return this;
     }
 }

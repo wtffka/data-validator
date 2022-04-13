@@ -1,13 +1,12 @@
 package hexlet.code.schemas;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class MapSchema extends BaseSchema {
 
     @Override
     public final MapSchema required() {
+        isRequiredOn();
         addCheck(x -> x instanceof Map);
         return this;
     }
@@ -19,11 +18,12 @@ public class MapSchema extends BaseSchema {
 
     public final void shape(final Map<String, BaseSchema> map) {
         addCheck(x -> {
-            List<Boolean> resultOfShape = new ArrayList<>();
             for (Map.Entry<String, BaseSchema> entry : map.entrySet()) {
-                resultOfShape.add(entry.getValue().isValid(((Map<?, ?>) x).get(entry.getKey())));
+                if (!entry.getValue().isValid(((Map<?, ?>) x).get(entry.getKey()))) {
+                    return false;
+                }
             }
-            return !resultOfShape.contains(false);
+            return true;
         });
     }
 }

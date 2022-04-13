@@ -4,7 +4,13 @@ public class NumberSchema extends BaseSchema {
 
     @Override
     public final NumberSchema required() {
-        addCheck(x -> x instanceof Integer || x instanceof Double);
+        isRequiredOn();
+        addCheck(x -> {
+            if (x instanceof Integer || x instanceof Double) {
+                return true;
+            }
+            return false;
+        });
         return this;
     }
 
@@ -13,10 +19,7 @@ public class NumberSchema extends BaseSchema {
             if (x instanceof Integer) {
                 return (int) x > 0;
             }
-            if (x instanceof Double) {
-                return (double) x > 0;
-            }
-            return x == null;
+            return (double) x > 0;
         });
         return this;
     }
@@ -26,10 +29,7 @@ public class NumberSchema extends BaseSchema {
             if (x instanceof Integer) {
                 return (int) x >= startOfRange && (int) x <= endOfRange;
             }
-            if (x instanceof Double) {
-                return (double) x >= startOfRange && (double) x <= endOfRange;
-            }
-            return false;
+            return (double) x >= startOfRange && (double) x <= endOfRange;
         });
         return this;
     }
