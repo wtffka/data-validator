@@ -19,7 +19,10 @@ public class NumberSchema extends BaseSchema {
             if (x instanceof Integer) {
                 return (int) x > 0;
             }
-            return (double) x > 0;
+            if (x instanceof Double) {
+                return (double) x > 0;
+            }
+            return false;
         });
         return this;
     }
@@ -29,7 +32,10 @@ public class NumberSchema extends BaseSchema {
             if (x instanceof Integer) {
                 return (int) x >= startOfRange && (int) x <= endOfRange;
             }
-            return (double) x >= startOfRange && (double) x <= endOfRange;
+            if (x instanceof Double) {
+                return (double) x >= startOfRange && (double) x <= endOfRange;
+            }
+            return false;
         });
         return this;
     }
